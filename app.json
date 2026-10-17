@@ -1,0 +1,91 @@
+{
+  "expo": {
+    "name": "Arche: Architect of the Self",
+    "slug": "grail-human-evolution",
+    "scheme": "grail",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#050308",
+    "primaryColor": "#E8B86D",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#050308"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-sharing",
+      "expo-image-picker",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#050308",
+          "image": "./assets/splash-blank.png",
+          "imageWidth": 48,
+          "resizeMode": "contain",
+          "ios": {
+            "image": "./assets/splash.png",
+            "enableFullScreenImage_legacy": true
+          },
+          "android": {
+            "image": "./assets/splash-blank.png",
+            "imageWidth": 48
+          }
+        }
+      ],
+      "expo-localization",
+      [
+        "expo-audio",
+        {
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#E8B86D",
+          "defaultChannel": "grail-method-3",
+          "sounds": ["./assets/sounds/signal.mp3"]
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.grail.humanevolution"
+    },
+    "android": {
+      "package": "com.grail.humanevolution",
+      "label": "Arche",
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#050308"
+      },
+      "permissions": [
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.VIBRATE",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.SCHEDULE_EXACT_ALARM"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
+    },
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "22810379-451f-4c93-a50b-4a8f62d23b80"
+      }
+    },
+    "owner": "eternalpresent1"
+  }
+}

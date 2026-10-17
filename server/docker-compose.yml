@@ -1,0 +1,9 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: arche
+      POSTGRES_PASSWORD: arche
+      POSTGRES_DB: arche
+    ports:
+      - "5432:5432"

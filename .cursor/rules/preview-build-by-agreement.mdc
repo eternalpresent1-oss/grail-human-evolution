@@ -1,0 +1,12 @@
+---
+description: Never start a preview build unless the user explicitly agrees in this conversation
+alwaysApply: true
+---
+
+# Preview builds only by agreement
+
+Never start, queue, or retry an EAS preview build (`--profile preview`, preview APK, or the same build under another name) unless the user has explicitly agreed to that build in the current conversation.
+
+A bug report, a splash fix, or "this should be on the phone" is not agreement. Finish the code change and stop. Ask before the build.
+
+Cancel a preview build immediately if the user says to stop it.

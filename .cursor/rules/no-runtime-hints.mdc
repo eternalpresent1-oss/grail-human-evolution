@@ -1,0 +1,18 @@
+---
+description: Never show Expo Go, APK, or development-build hints in the app UI
+alwaysApply: true
+---
+
+# No runtime / toolchain hints in the app
+
+Never put user-facing copy about Expo Go, development builds, APKs, simulators, native modules, or how a feature will work later in another build.
+
+If a feature cannot run in the current environment, fail silently or show a normal product error. Do not explain the toolchain.
+
+```tsx
+// BAD
+<Text>Expo Go не ставит сигнал на телефон. Часы сохранятся и заработают в development build.</Text>
+
+// GOOD
+// Skip the hint. Keep the clocks in state. Do not mention Expo, APK, or builds.
+```
