@@ -56,6 +56,7 @@ import { MAX_COUNSEL_MESSAGES, type CounselMessage } from '@/types/counsel';
 import { MAX_ACHIEVEMENTS } from '@/types/achievement';
 import { profileAge, withDerivedScores } from '@/utils/profile';
 import { isDeadlinePassed, isSchedulableDateKey, localDateKey } from '@/utils/taskTime';
+import { ensureSundayFieldMark } from '@/utils/methodWeek';
 import { latestWindowShadow } from '@/utils/weekLedger';
 import {
   canAddTalent,
@@ -1263,6 +1264,14 @@ export const useGrailStore = create<GrailState>()(
         };
         nextProfile = stampDiscipline(nextProfile, nextTasks, shadowEvents);
 
+        const state = get();
+        const weekFieldMarks = ensureSundayFieldMark(state.weekFieldMarks ?? {}, {
+          profile: nextProfile,
+          tasks: nextTasks,
+          shadowEvents,
+          today,
+        });
+
         const tasksChanged = nextTasks.some((task, index) => {
           const previous = tasks[index];
           return (
@@ -1280,12 +1289,13 @@ export const useGrailStore = create<GrailState>()(
           !tasksChanged &&
           nextTasks.length === tasks.length &&
           nextProfile.firstOpenOn === profile.firstOpenOn &&
-          nextProfile.disciplineScore === profile.disciplineScore
+          nextProfile.disciplineScore === profile.disciplineScore &&
+          weekFieldMarks === state.weekFieldMarks
         ) {
           return;
         }
 
-        set({ tasks: nextTasks, profile: nextProfile });
+        set({ tasks: nextTasks, profile: nextProfile, weekFieldMarks });
       },
     }),
     {
@@ -1314,6 +1324,7 @@ export const useGrailStore = create<GrailState>()(
         musicEnabled: state.musicEnabled,
         disciplineBeacon: state.disciplineBeacon,
         breathAwardedOn: state.breathAwardedOn,
+        weekFieldMarks: state.weekFieldMarks,
       }),
       migrate: migratePersistedState,
       onRehydrateStorage: () => (_persisted, _error) => {

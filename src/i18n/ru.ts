@@ -63,7 +63,7 @@ export const ru: Record<TranslationKey, string> = {
   'atomizer.subtitle': 'Дисциплина дня {today}%  ·  Канон {kept}/{promised}',
   'atomizer.subtitle.past': 'Канон {kept}/{promised}',
   'atomizer.filter.all': 'Все',
-  'atomizer.empty.sunday': 'Воскресенье — день метода. Канона нет, слово уже дано.',
+  'atomizer.empty.sunday': 'Воскресенье — день метода.',
   'atomizer.history.title': 'Летопись дня',
   'atomizer.cta.label': 'Добавить',
   'atomizer.shadow.label': 'Тень',
@@ -339,7 +339,7 @@ export const ru: Record<TranslationKey, string> = {
   'analytics.subtitle.daily.other':
     'Дисциплина дня {today}%  ·  {completed}/{total} атома',
   'analytics.subtitle.life':
-    'Гармония {harmony}%  ·  среднее поле {average}  ·  дисциплина жизни {life}%',
+    'Гармония {harmony}%  ·  среднее поле {average}%  ·  дисциплина жизни {life}%',
   'analytics.subtitle.shadow': 'Тень {average}%',
   'analytics.harmony': 'Гармония: {value}%',
   'analytics.average': 'Тень {value}%',
@@ -668,12 +668,14 @@ export const ru: Record<TranslationKey, string> = {
   'signal.title': 'Сигнал',
   'signal.body': 'Время, которое ты поставил.',
 
-  'review.kicker': 'Метод недели',
   'review.title': 'Метод недели',
-  'review.was': 'Было: канон {kept}/{promised}',
-  'review.became': 'Стало: дисциплина дня {today}% · тень {shadow}',
-  'review.next.canon': 'На неделю: канон как стоит.',
-  'review.next.goal': 'На неделю: цель «{title}».',
+  'review.col.metric': 'Показатель',
+  'review.col.was': 'Было',
+  'review.col.became': 'Стало',
+  'review.row.life': 'Дисциплина жизни',
+  'review.row.shadow': 'Тень',
+  'review.goal.none': 'Цель не задана.',
+  'review.goal.left': 'Цель: {title}\nосталось: {months} мес. {days} д.',
 
   // ─── Life survey ───────────────────────────────────────────────────────────
   'character.campaign.kicker': 'Цель',

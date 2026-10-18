@@ -63,7 +63,7 @@ export const en = {
   'atomizer.subtitle': 'Day discipline {today}%  ·  Canon {kept}/{promised}',
   'atomizer.subtitle.past': 'Canon {kept}/{promised}',
   'atomizer.filter.all': 'All',
-  'atomizer.empty.sunday': 'Sunday is the method day. No canon — the word is already given.',
+  'atomizer.empty.sunday': 'Sunday is the method day.',
   'atomizer.history.title': 'Chronicle of the day',
   'atomizer.cta.label': 'Add',
   'atomizer.shadow.label': 'Shadow',
@@ -336,7 +336,7 @@ export const en = {
   'analytics.subtitle.daily.other':
     'Day discipline {today}%  ·  {completed}/{total} atoms',
   'analytics.subtitle.life':
-    'Harmony {harmony}%  ·  average field {average}  ·  life discipline {life}%',
+    'Harmony {harmony}%  ·  average field {average}%  ·  life discipline {life}%',
   'analytics.subtitle.shadow': 'Shadow {average}%',
   'analytics.harmony': 'Harmony: {value}%',
   'analytics.average': 'Shadow {value}%',
@@ -665,12 +665,14 @@ export const en = {
   'signal.title': 'Signal',
   'signal.body': 'The time you set.',
 
-  'review.kicker': 'Week method',
   'review.title': 'Method of the week',
-  'review.was': 'Was: canon {kept}/{promised}',
-  'review.became': 'Became: day discipline {today}% · shadow {shadow}',
-  'review.next.canon': 'For the week: canon as it stands.',
-  'review.next.goal': 'For the week: the goal “{title}”.',
+  'review.col.metric': 'Metric',
+  'review.col.was': 'Was',
+  'review.col.became': 'Became',
+  'review.row.life': 'Life discipline',
+  'review.row.shadow': 'Shadow',
+  'review.goal.none': 'No goal set.',
+  'review.goal.left': 'Goal: {title}\nleft: {months} mo. {days} d.',
 
   'character.campaign.kicker': 'Goal',
   'character.campaign.empty': 'Add a goal',

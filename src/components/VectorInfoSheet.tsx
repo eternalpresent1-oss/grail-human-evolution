@@ -8,16 +8,22 @@ import { colors, layout, motion, space, typography } from '@/theme';
 import { type HumanDimensionId } from '@/types/grail';
 
 export function VectorInfoSheet({
-  dimensionId,
+  dimensionId = null,
+  title = null,
   onClose,
   blurb,
 }: {
-  dimensionId: HumanDimensionId | null;
+  dimensionId?: HumanDimensionId | null;
+  /** Free-form title when `dimensionId` is null (e.g. Method of the week rows). */
+  title?: string | null;
   onClose: () => void;
   blurb?: string;
 }): ReactElement {
   const t = useTranslator();
-  const open = dimensionId !== null;
+  const open = dimensionId !== null || (title !== null && title.length > 0);
+  const heading = dimensionId !== null ? t(dimensionNameKey(dimensionId)) : (title ?? '');
+  const body =
+    blurb ?? (dimensionId !== null ? t(dimensionBlurbKey(dimensionId)) : '');
 
   return (
     <ModalSheet
@@ -25,12 +31,12 @@ export function VectorInfoSheet({
       onClose={onClose}
       align="center"
       panelStyle={styles.panel}
-      accessibilityLabel={open ? t(dimensionNameKey(dimensionId)) : t('common.close')}
+      accessibilityLabel={open ? heading : t('common.close')}
     >
-      {dimensionId === null ? null : (
+      {!open ? null : (
         <View style={styles.body}>
           <View style={styles.header}>
-            <Text style={styles.title}>{t(dimensionNameKey(dimensionId))}</Text>
+            <Text style={styles.title}>{heading}</Text>
             <Pressable
               onPress={onClose}
               accessibilityRole="button"
@@ -41,7 +47,7 @@ export function VectorInfoSheet({
               <Text style={styles.closeLabel}>✕</Text>
             </Pressable>
           </View>
-          <Text style={styles.blurb}>{blurb ?? t(dimensionBlurbKey(dimensionId))}</Text>
+          <Text style={styles.blurb}>{body}</Text>
         </View>
       )}
     </ModalSheet>

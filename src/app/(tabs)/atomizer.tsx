@@ -14,6 +14,7 @@ import { CreateAtomModal } from '@/components/CreateAtomModal';
 import { DayCalendarStrip } from '@/components/DayCalendarStrip';
 import { DayVerdictCard } from '@/components/DayVerdictCard';
 import { GlassPanel } from '@/components/GlassPanel';
+import { MethodWeekPanel } from '@/components/MethodWeekPanel';
 import { RestoreAtomModal } from '@/components/RestoreAtomModal';
 import { ShadowConfessSheet } from '@/components/ShadowConfessSheet';
 import { TaskAtomCard } from '@/components/TaskAtomCard';
@@ -50,8 +51,8 @@ import {
 import { dayVerdict } from '@/utils/dayVerdict';
 import { chronicleWeekStart } from '@/utils/firstOpen';
 import { formatScore } from '@/utils/formatScore';
+import { methodWeekTable } from '@/utils/methodWeek';
 import { isoWeekday, localDateKey, weekMondayOf } from '@/utils/taskTime';
-import { weekReview } from '@/utils/weekReview';
 
 type DimensionFilter = 'all' | HumanDimensionId;
 
@@ -79,9 +80,10 @@ export default function AtomizerScreen(): ReactElement {
   const isSunday = isoWeekday(viewDate) === 7;
   const campaigns = useGrailStore((state) => state.campaigns);
   const shadowEvents = useGrailStore((state) => state.shadowEvents);
-  const review = weekReview(profile.promiseJournal, shadowEvents, viewDate);
+  const weekFieldMarks = useGrailStore((state) => state.weekFieldMarks);
   const campaign = createdCampaign(campaigns);
   const isPastDay = viewDate < today;
+  const isToday = viewDate === today;
   const canonWeek = countCanonWeek(tasks, weekMondayOf(viewDate));
   const dayDiscipline = isPastDay
     ? computeHistoricalDayDisciplineScore({
@@ -91,6 +93,10 @@ export default function AtomizerScreen(): ReactElement {
         shadowEvents,
       })
     : computeDayDisciplineScore({ tasks, today, shadowEvents });
+  const methodTable = useMemo(
+    () => (isSunday && viewDate <= today ? methodWeekTable(weekFieldMarks ?? {}, viewDate) : null),
+    [isSunday, viewDate, today, weekFieldMarks],
+  );
 
   const visibleTasks = useMemo(() => {
     const roster = tasks.filter((task) => isOnAtomizerDay(task, viewDate, today));
@@ -188,13 +194,13 @@ export default function AtomizerScreen(): ReactElement {
             actions={<SettingsButton />}
           >
             <Text style={styles.subtitle}>
-              {isPastDay
-                ? t('atomizer.subtitle.past', {
+              {isToday
+                ? t('atomizer.subtitle', {
+                    today: formatScore(dayDiscipline),
                     kept: canonWeek.kept,
                     promised: canonWeek.promised,
                   })
-                : t('atomizer.subtitle', {
-                    today: formatScore(dayDiscipline),
+                : t('atomizer.subtitle.past', {
                     kept: canonWeek.kept,
                     promised: canonWeek.promised,
                   })}
@@ -275,25 +281,8 @@ export default function AtomizerScreen(): ReactElement {
           ))}
         </ScrollView>
 
-        {isSunday ? (
-          <GlassPanel style={styles.review} intensity={34}>
-            <Text style={styles.reviewKicker}>{t('review.kicker')}</Text>
-            <Text style={styles.reviewTitle}>{t('review.title')}</Text>
-            <Text style={styles.reviewLine}>
-              {t('review.was', { kept: review.kept, promised: review.promised })}
-            </Text>
-            <Text style={styles.reviewLine}>
-              {t('review.became', {
-                today: formatScore(dayDiscipline),
-                shadow: review.shadowCount,
-              })}
-            </Text>
-            <Text style={styles.reviewLine}>
-              {campaign === undefined
-                ? t('review.next.canon')
-                : t('review.next.goal', { title: campaign.title })}
-            </Text>
-          </GlassPanel>
+        {methodTable !== null ? (
+          <MethodWeekPanel t={t} table={methodTable} campaign={campaign} asOf={viewDate} />
         ) : null}
 
         {isPastDay ? (
@@ -483,25 +472,6 @@ const styles = StyleSheet.create({
     gap: space.sm,
     paddingVertical: space.lg + 2,
   },
-  review: {
-    marginBottom: space.sm,
-    borderRadius: radius.xl,
-    padding: space.lg,
-  },
-  reviewKicker: {
-    ...typography.micro,
-    color: colors.accent.goldMuted,
-  },
-  reviewTitle: {
-    ...typography.heading,
-    marginTop: space.sm,
-    color: colors.text.ivory,
-  },
-  reviewLine: {
-    ...typography.body,
-    marginTop: space.sm,
-    color: colors.text.muted,
-  },
   chip: {
     borderRadius: radius.pill,
     paddingHorizontal: space.md,
@@ -553,7 +523,7 @@ const styles = StyleSheet.create({
     ...typography.bodyStrong,
     marginTop: space.sm,
     marginBottom: space.lg + 2,
-    color: colors.text.faint,
+    color: colors.text.ivory,
     textAlign: 'center',
   },
   shadowPill: {

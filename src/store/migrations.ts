@@ -45,6 +45,7 @@ import {
   sanitizeLifeVectorReading,
   sanitizeProofUri,
 } from '@/utils/grailSnapshot';
+import { type WeekFieldMarks } from '@/utils/methodWeek';
 
 /**
  * 1 — XP pools replaced directly mutated scores.
@@ -73,8 +74,9 @@ import {
  * 20 — canon no longer asks for proof.
  * 21 — the chronicle starts on the first launch: no canon, and no earlier week, before that day.
  * 22 — a finished survey keeps its Craft score, and the career wall is the next step above it.
+ * 23 — Sunday Method of the week stores Was/Became field marks (Sun–Sat weeks).
  */
-export const STORAGE_VERSION = 22;
+export const STORAGE_VERSION = 23;
 
 export interface PersistedGrailState {
   profile: UserProfile;
@@ -98,6 +100,8 @@ export interface PersistedGrailState {
   musicEnabled: boolean;
   disciplineBeacon: boolean;
   breathAwardedOn: string;
+  /** Sunday-keyed end-of-week field snapshots for Method of the week. */
+  weekFieldMarks: WeekFieldMarks;
 }
 
 type PreV12State = Omit<
@@ -113,6 +117,7 @@ type PreV12State = Omit<
   | 'musicEnabled'
   | 'disciplineBeacon'
   | 'breathAwardedOn'
+  | 'weekFieldMarks'
 >;
 
 export function createBaselineState(): PersistedGrailState {
@@ -139,6 +144,7 @@ export function createBaselineState(): PersistedGrailState {
     musicEnabled: true,
     disciplineBeacon: false,
     breathAwardedOn: '',
+    weekFieldMarks: {},
   };
 }
 
@@ -224,7 +230,15 @@ export function migratePersistedState(persisted: unknown, version: number): Pers
           localDateKey(),
         );
 
-  return liftSurveyCareer(upgraded);
+  return withWeekFieldMarks(liftSurveyCareer(upgraded));
+}
+
+function withWeekFieldMarks(state: PersistedGrailState): PersistedGrailState {
+  if (state.weekFieldMarks !== undefined && typeof state.weekFieldMarks === 'object') {
+    return state;
+  }
+
+  return { ...state, weekFieldMarks: {} };
 }
 
 function liftSurveyCareer(state: PersistedGrailState): PersistedGrailState {
@@ -382,7 +396,12 @@ function upgradePersistedState(persisted: unknown, version: number): PersistedGr
 
 function migrateLegacyToV5(persisted: unknown): Omit<
   PersistedGrailState,
-  'shadowEvents' | 'soundEnabled' | 'musicEnabled' | 'disciplineBeacon' | 'breathAwardedOn'
+  | 'shadowEvents'
+  | 'soundEnabled'
+  | 'musicEnabled'
+  | 'disciplineBeacon'
+  | 'breathAwardedOn'
+  | 'weekFieldMarks'
 > & {
   shadowEvents?: readonly ShadowEvent[];
 } {
@@ -854,6 +873,7 @@ function migrateV16ToV17(persisted: unknown): PersistedGrailState {
     musicEnabled: true,
     disciplineBeacon: false,
     breathAwardedOn: '',
+    weekFieldMarks: {},
   };
 }
 

@@ -207,6 +207,19 @@ export function campaignMonthsLeft(campaign: Campaign, asOf: string): number {
   return Math.max(0, Math.ceil(remainingDays / 30));
 }
 
+/** Whole months and leftover days on the same 30-day month scale as `campaignMonthsLeft`. */
+export function campaignRemainingParts(
+  campaign: Campaign,
+  asOf: string,
+): { readonly months: number; readonly days: number } {
+  const elapsedDays = Math.max(0, calendarDaysBetween(campaign.startedOn, asOf));
+  const remainingDays = Math.max(0, campaign.horizonMonths * 30 - elapsedDays);
+  return {
+    months: Math.floor(remainingDays / 30),
+    days: remainingDays % 30,
+  };
+}
+
 export interface CampaignCountdown {
   readonly days: number;
   readonly hours: number;
