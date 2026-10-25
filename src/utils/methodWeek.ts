@@ -123,15 +123,20 @@ export interface MethodWeekTable {
 
 /**
  * Builds Was/Became rows for Method of the week on a Sunday.
- * Was = end of the week before last; Became = end of the week just closed.
- * Missing marks render as null (UI shows a dash) — never invent scores.
+ * Was = stamped end of the week before last (dash if missing).
+ * Became = live field when `liveBecame` is passed (today’s reading);
+ * otherwise the stamped end of the week just closed.
  */
-export function methodWeekTable(marks: WeekFieldMarks, sundayDate: string): MethodWeekTable {
+export function methodWeekTable(
+  marks: WeekFieldMarks,
+  sundayDate: string,
+  liveBecame?: WeekFieldMark | null,
+): MethodWeekTable {
   const weekSunday = methodReviewWeekSunday(sundayDate);
   const weekSaturday = weekSaturdayOfSunday(weekSunday);
   const priorWeekSunday = methodReviewWeekSunday(weekSunday);
   const was = marks[priorWeekSunday];
-  const became = marks[weekSunday];
+  const became = liveBecame ?? marks[weekSunday] ?? null;
 
   const rows: MethodWeekRow[] = [
     ...HUMAN_DIMENSION_IDS.map(

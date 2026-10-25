@@ -52,7 +52,7 @@ import {
 import { dayVerdict } from '@/utils/dayVerdict';
 import { chronicleWeekStart } from '@/utils/firstOpen';
 import { formatScore } from '@/utils/formatScore';
-import { methodWeekTable } from '@/utils/methodWeek';
+import { captureWeekFieldMark, methodWeekTable } from '@/utils/methodWeek';
 import { isoWeekday, localDateKey, weekMondayOf } from '@/utils/taskTime';
 
 type DimensionFilter = 'all' | HumanDimensionId;
@@ -101,10 +101,21 @@ export default function AtomizerScreen(): ReactElement {
     firstOpenOn: profile.firstOpenOn,
     shadowEvents,
   });
-  const methodTable = useMemo(
-    () => (isSunday && viewDate <= today ? methodWeekTable(weekFieldMarks ?? {}, viewDate) : null),
-    [isSunday, viewDate, today, weekFieldMarks],
-  );
+  const methodTable = useMemo(() => {
+    if (!isSunday || viewDate > today) {
+      return null;
+    }
+    const liveBecame =
+      viewDate === today
+        ? captureWeekFieldMark({
+            profile,
+            tasks,
+            shadowEvents,
+            asOf: today,
+          })
+        : null;
+    return methodWeekTable(weekFieldMarks ?? {}, viewDate, liveBecame);
+  }, [isSunday, viewDate, today, weekFieldMarks, profile, tasks, shadowEvents]);
 
   const visibleTasks = useMemo(() => {
     const roster = tasks.filter((task) => isOnAtomizerDay(task, viewDate, today));

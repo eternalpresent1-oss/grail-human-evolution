@@ -82,6 +82,30 @@ describe('methodWeekTable', () => {
       became: 10,
     });
   });
+
+  it('uses a live Became reading when provided', () => {
+    const was = mark({
+      stampedOn: '2026-10-11',
+      lifeDiscipline: 60,
+      dimensions: { ...mark().dimensions, physical: 40 },
+    });
+    const live = mark({
+      stampedOn: '2026-10-18',
+      lifeDiscipline: 88,
+      dimensions: { ...mark().dimensions, physical: 72 },
+    });
+
+    const table = methodWeekTable({ '2026-10-04': was }, '2026-10-18', live);
+
+    expect(table.rows.find((row) => row.id === 'physical')).toMatchObject({
+      was: 40,
+      became: 72,
+    });
+    expect(table.rows.find((row) => row.id === 'life')).toMatchObject({
+      was: 60,
+      became: 88,
+    });
+  });
 });
 
 describe('ensureSundayFieldMark', () => {
