@@ -616,8 +616,12 @@ export const ru: Record<TranslationKey, string> = {
   'settings.account.google': 'Войти через Google',
   'settings.account.out': 'Выйти',
   'settings.account.delete': 'Удалить аккаунт',
+  'settings.account.signed': 'Вход: {provider}',
   'settings.account.unavailable': 'Вход сейчас недоступен.',
   'settings.account.failed': 'Вход не прошёл.',
+  'settings.account.sync.ok': 'Аккаунт подключён. Прогресс может синхронизироваться с сервером.',
+  'settings.account.sync.server':
+    'На сервере была более новая копия — она применена на этом телефоне. Локальное фото и ключи остались здесь.',
   'settings.account.delete.title': 'Удалить аккаунт на сервере?',
   'settings.account.delete.body':
     'Серверная копия этого прогресса стирается. То, что уже есть на этом телефоне, остаётся, пока не сбросишь его здесь.',

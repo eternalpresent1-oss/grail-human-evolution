@@ -613,8 +613,12 @@ export const en = {
   'settings.account.google': 'Sign in with Google',
   'settings.account.out': 'Sign out',
   'settings.account.delete': 'Delete account',
+  'settings.account.signed': 'Signed in with {provider}',
   'settings.account.unavailable': 'Sign-in is unavailable right now.',
   'settings.account.failed': 'Sign-in did not go through.',
+  'settings.account.sync.ok': 'Account connected. Progress can sync with the server.',
+  'settings.account.sync.server':
+    'The server copy was newer — it was applied on this phone. Local photo and keys stayed here.',
   'settings.account.delete.title': 'Delete the account on the server?',
   'settings.account.delete.body':
     'The server copy of this progress is erased. What is already on this phone stays until you reset it here.',

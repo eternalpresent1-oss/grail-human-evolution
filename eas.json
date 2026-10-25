@@ -12,11 +12,17 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "252716351253-f6cnkf6fb6t0iqasp86t4mb3qf9quocd.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "252716351253-7293braai24odmjli6i7k4ccbncdu6ju.apps.googleusercontent.com"
       }
     },
     "production": {
       "env": {
-        "EXPO_PUBLIC_ENFORCE_ACCESS": "1"
+        "EXPO_PUBLIC_ENFORCE_ACCESS": "1",
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "252716351253-f6cnkf6fb6t0iqasp86t4mb3qf9quocd.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "252716351253-7293braai24odmjli6i7k4ccbncdu6ju.apps.googleusercontent.com"
       }
     }
   }
