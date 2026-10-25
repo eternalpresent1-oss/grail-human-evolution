@@ -84,13 +84,11 @@ function CounselModal({
 
     setBusy(true);
     setError(null);
-    if (counselChannel() === 'local') {
-      const blocked = await accessBlockNow('counsel_question', localDateKey());
-      if (blocked !== null) {
-        setBusy(false);
-        setError(t(blocked === 'limit' ? 'access.limit' : 'access.premium'));
-        return;
-      }
+    const blocked = await accessBlockNow('counsel_question', localDateKey());
+    if (blocked !== null) {
+      setBusy(false);
+      setError(t(blocked === 'limit' ? 'access.limit' : 'access.premium'));
+      return;
     }
     appendCounselMessage({ id: createCounselId(), role: 'user', text: prompt });
     setDraft('');
@@ -222,13 +220,11 @@ export function LifeVectorRefresh({
 
     setBusy(true);
     setError(null);
-    if (counselChannel() === 'local') {
-      const blocked = await accessBlockNow('life_vector', localDateKey());
-      if (blocked !== null) {
-        setBusy(false);
-        setError(t(blocked === 'limit' ? 'access.limit' : 'access.premium'));
-        return;
-      }
+    const blocked = await accessBlockNow('life_vector', localDateKey());
+    if (blocked !== null) {
+      setBusy(false);
+      setError(t(blocked === 'limit' ? 'access.limit' : 'access.premium'));
+      return;
     }
 
     try {

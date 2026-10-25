@@ -14,6 +14,10 @@
         "buildType": "apk"
       }
     },
-    "production": {}
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_ENFORCE_ACCESS": "1"
+      }
+    }
   }
 }

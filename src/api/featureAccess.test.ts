@@ -29,11 +29,36 @@ describe('feature access', () => {
 
   it('runs the action immediately when nobody is signed in', () => {
     rememberAccountSession(null);
+    const previous = process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
+    delete process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
     const apply = jest.fn();
     const block = jest.fn();
     runIfAllowed('custom_atom', '2026-09-26', apply, block);
     expect(apply).toHaveBeenCalledTimes(1);
     expect(block).not.toHaveBeenCalled();
+    if (previous === undefined) {
+      delete process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
+    } else {
+      process.env.EXPO_PUBLIC_ENFORCE_ACCESS = previous;
+    }
+  });
+
+  it('blocks premium offline when store access is enforced', () => {
+    rememberAccountSession(null);
+    const previous = process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
+    process.env.EXPO_PUBLIC_ENFORCE_ACCESS = '1';
+    const apply = jest.fn();
+    const block = jest.fn();
+    runIfAllowed('custom_atom', '2026-09-26', apply, block);
+    expect(apply).not.toHaveBeenCalled();
+    expect(block).toHaveBeenCalledWith('premium');
+    runIfAllowed('breath', '2026-09-26', apply, block);
+    expect(apply).toHaveBeenCalledTimes(1);
+    if (previous === undefined) {
+      delete process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
+    } else {
+      process.env.EXPO_PUBLIC_ENFORCE_ACCESS = previous;
+    }
   });
 
   it('does not send a premium flag', async () => {
