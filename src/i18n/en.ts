@@ -61,6 +61,7 @@ export const en = {
   'atomizer.kicker': 'Particle system',
   'atomizer.title': 'Movement is life',
   'atomizer.subtitle': 'Day discipline {today}%  ·  Canon {kept}/{promised}',
+  'atomizer.subtitle.sunday': 'Life discipline {life}%  ·  Canon {kept}/{promised}',
   'atomizer.subtitle.past': 'Canon {kept}/{promised}',
   'atomizer.filter.all': 'All',
   'atomizer.empty.sunday': 'Sunday is the method day.',
@@ -193,7 +194,7 @@ export const en = {
   // ─── Create atom modal ─────────────────────────────────────────────────────
   'create.title': 'Create an atom',
   'create.field.title': 'Name of the action',
-  'create.field.title.placeholder': 'For example: 20 minutes of strength work',
+  'create.field.title.placeholder': '',
   'create.field.title.error': 'Name the atom. An empty title creates no action.',
   'create.field.deadline': 'Deadline',
   'create.field.date': 'Date',
@@ -305,7 +306,7 @@ export const en = {
     'Analysis gathers cards in three directions: day, life and shadow.\n\nThey show where the strong side is now, where there is room to grow, and what is worth noticing.\n\nAt the bottom is an advisor — it helps turn what you notice into a concrete action.',
   'guide.data.title': 'Data',
   'guide.data.body':
-    'All data lives on the phone.\n\nReset burns the atoms you added and the shadow. Life and the name stay.\n\nA full wipe erases all data — the app returns to a state as if it had never been opened.',
+    'Reset burns the atoms you added and the shadow. Life and the name stay.\n\nA full wipe erases all data — the app returns to a state as if it had never been opened.',
   'guide.atoms.title': 'Atoms',
   'guide.atoms.body':
     'An atom is one concrete action. Something you can do and close in a day.\n\nAn atom answers the question: “What am I doing?”\n\nAn atom can belong to a goal or stand on its own — as an action that keeps one of the eight vectors going.\n\nFor example: walk for 30 minutes, do a workout, read a few pages, send a job application, call someone close.',
@@ -448,7 +449,7 @@ export const en = {
   'analytics.life.veryHigh.spirit':
     'It’s clear what matters to you. Keep that in view, and don’t forget the specific people and things that are dear to you.',
   'analytics.daily.done.physical':
-    'You took good care of the body. That’s enough — just keep the usual rhythm.',
+    'You took good care of the body. Keep the usual rhythm.',
   'analytics.daily.partial.physical':
     'Something for the body is already done. Pick one remaining task and finish it calmly.',
   'analytics.daily.missed.physical':
@@ -460,37 +461,37 @@ export const en = {
   'analytics.daily.missed.intellect':
     'There wasn’t enough attention for these tasks. Pick one small one and sit with it calmly.',
   'analytics.daily.done.mind_psyche':
-    'You gave enough attention to how you are. That’s enough — just keep a quiet evening rhythm.',
+    'You gave enough attention to how you are. Keep a quiet evening rhythm.',
   'analytics.daily.partial.mind_psyche':
     'There was time for yourself, but something is still open. Pick one thing and give it calm attention.',
   'analytics.daily.missed.mind_psyche':
     'There was almost no time for yourself. Stop for a few minutes and sit without tasks or new information.',
   'analytics.daily.done.drive':
-    'You did the thing that needed action. That’s enough — don’t pile new tasks on yourself right away.',
+    'You did the thing that needed action. Don’t pile new tasks on yourself right away.',
   'analytics.daily.partial.drive':
     'Things moved, but something is still open. Pick one and take the next step.',
   'analytics.daily.missed.drive':
     'It was hard to start. Pick the simplest thing on the list and begin with the first step.',
   'analytics.daily.done.craft_career':
-    'Professional work got enough attention. That’s enough — you can end the day calmly.',
+    'Professional work got enough attention. You can end the day calmly.',
   'analytics.daily.partial.craft_career':
     'The professional field moved, but one piece is still open. Take it through to a result.',
   'analytics.daily.missed.craft_career':
     'Professional work didn’t move. Take one step: an application, a message, a draft, or part of a task.',
   'analytics.daily.done.wealth':
-    'You paid attention to this side of life. That’s enough — just keep watching what matters to you here.',
+    'You paid attention to this side of life. Keep watching what matters to you here.',
   'analytics.daily.partial.wealth':
     'Some of the money questions got sorted, but one is still open. Come back to it before it disappears among the rest.',
   'analytics.daily.missed.wealth':
     'This side of life got no attention. Take five minutes and see what needs it most right now.',
   'analytics.daily.done.social':
-    'You made time for people. That’s enough — stay in touch with those who matter to you.',
+    'You made time for people. Stay in touch with those who matter to you.',
   'analytics.daily.partial.social':
     'There was contact, but one person still went without attention. Write or call them.',
   'analytics.daily.missed.social':
     'There was almost no living contact. Write or call one person you want to talk to.',
   'analytics.daily.done.spirit':
-    'You paid attention to what matters to you. That’s enough — just keep it in the day.',
+    'You paid attention to what matters to you. Keep it in the day.',
   'analytics.daily.partial.spirit':
     'You managed to stop and notice what matters, but there’s room for one more small step.',
   'analytics.daily.missed.spirit':

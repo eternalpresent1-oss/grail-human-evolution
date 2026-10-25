@@ -46,6 +46,7 @@ import {
 import { countCanonWeek } from '@/utils/canonWeek';
 import {
   computeDayDisciplineScore,
+  computeDisciplineScore,
   computeHistoricalDayDisciplineScore,
 } from '@/utils/discipline';
 import { dayVerdict } from '@/utils/dayVerdict';
@@ -93,6 +94,13 @@ export default function AtomizerScreen(): ReactElement {
         shadowEvents,
       })
     : computeDayDisciplineScore({ tasks, today, shadowEvents });
+  const lifeDiscipline = computeDisciplineScore({
+    tasks,
+    today,
+    journal: profile.promiseJournal,
+    firstOpenOn: profile.firstOpenOn,
+    shadowEvents,
+  });
   const methodTable = useMemo(
     () => (isSunday && viewDate <= today ? methodWeekTable(weekFieldMarks ?? {}, viewDate) : null),
     [isSunday, viewDate, today, weekFieldMarks],
@@ -194,16 +202,22 @@ export default function AtomizerScreen(): ReactElement {
             actions={<SettingsButton />}
           >
             <Text style={styles.subtitle}>
-              {isToday
-                ? t('atomizer.subtitle', {
-                    today: formatScore(dayDiscipline),
+              {isToday && isSunday
+                ? t('atomizer.subtitle.sunday', {
+                    life: formatScore(lifeDiscipline),
                     kept: canonWeek.kept,
                     promised: canonWeek.promised,
                   })
-                : t('atomizer.subtitle.past', {
-                    kept: canonWeek.kept,
-                    promised: canonWeek.promised,
-                  })}
+                : isToday
+                  ? t('atomizer.subtitle', {
+                      today: formatScore(dayDiscipline),
+                      kept: canonWeek.kept,
+                      promised: canonWeek.promised,
+                    })
+                  : t('atomizer.subtitle.past', {
+                      kept: canonWeek.kept,
+                      promised: canonWeek.promised,
+                    })}
             </Text>
             <Text style={styles.canonHint}>{t('atomizer.canon.hint')}</Text>
           </ScreenHeader>
