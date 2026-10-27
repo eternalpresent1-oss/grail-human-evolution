@@ -6,6 +6,7 @@ import { createAskOpenAi } from './openai.ts';
 import { createPostgresStore } from './postgresStore.ts';
 
 const port = Number(process.env.PORT ?? '8787');
+const host = process.env.HOST ?? '0.0.0.0';
 const databaseUrl = process.env.DATABASE_URL;
 const appleClientId = process.env.APPLE_CLIENT_ID ?? '';
 const googleClientIds = (process.env.GOOGLE_CLIENT_IDS ?? '')
@@ -70,4 +71,4 @@ const server = createServer(async (req, res) => {
   res.end(JSON.stringify(response.body));
 });
 
-server.listen(port);
+server.listen(port, host);

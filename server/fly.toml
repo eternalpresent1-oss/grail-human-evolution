@@ -1,0 +1,26 @@
+# Arche API — one small always-on machine (shared-cpu-1x 256MB).
+# Postgres: Supabase (DATABASE_URL secret). No Fly MPG.
+app = 'arche-api'
+primary_region = 'fra'
+
+[build]
+  dockerfile = 'Dockerfile'
+
+[http_service]
+  internal_port = 8787
+  force_https = true
+  auto_stop_machines = 'off'
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+  [[http_service.checks]]
+    interval = '15s'
+    timeout = '2s'
+    grace_period = '20s'
+    method = 'GET'
+    path = '/health'
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'

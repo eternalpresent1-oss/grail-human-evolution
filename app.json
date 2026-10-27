@@ -63,7 +63,7 @@
     },
     "android": {
       "package": "com.grail.humanevolution",
-      "versionCode": 2,
+      "versionCode": 3,
       "label": "Arche",
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {

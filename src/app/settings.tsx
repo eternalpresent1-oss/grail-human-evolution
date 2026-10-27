@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { AccountSection } from '@/components/AccountSection';
 import { GlassPanel } from '@/components/GlassPanel';
 import { KeyboardInsetScrollView } from '@/components/KeyboardInsetScrollView';
 import { ModalSheet } from '@/components/ModalSheet';
@@ -137,6 +138,7 @@ export default function SettingsScreen(): ReactElement {
         <SoundSection />
         <ProfileSection />
         <SurveySection />
+        <AccountSection />
 
         <Section title={t('settings.reset.title')}>
           <ActionButton
