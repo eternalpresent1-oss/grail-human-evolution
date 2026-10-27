@@ -6,6 +6,9 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LifeSurveyForm } from '@/app/survey';
+import { connectGoogleAccount } from '@/api/connectGoogleAccount';
+import { apiBaseUrl } from '@/api/accountSession';
+import { googleSignInConfigured } from '@/config/googleAuth';
 import { KeyboardInsetScrollView } from '@/components/KeyboardInsetScrollView';
 import { ActionButton } from '@/components/ui/ActionButton';
 import { useTranslator } from '@/i18n/TranslatorProvider';
@@ -45,21 +48,83 @@ export default function OnboardingScreen(): ReactElement {
 }
 
 function OnboardingFlow(): ReactElement {
-  const [step, setStep] = useState<'who' | 'survey'>('who');
+  const [step, setStep] = useState<'who' | 'survey' | 'google'>('who');
   const router = useRouter();
+  const enterApp = (): void => {
+    router.replace('/atomizer');
+  };
 
   if (step === 'survey') {
     return (
       <LifeSurveyForm
         locked
         onApplied={() => {
-          router.replace('/atomizer');
+          const canGoogle = apiBaseUrl().length > 0 && googleSignInConfigured();
+          if (canGoogle) {
+            setStep('google');
+            return;
+          }
+          enterApp();
         }}
       />
     );
   }
 
+  if (step === 'google') {
+    return <GoogleStep onDone={enterApp} />;
+  }
+
   return <WhoStep onNext={() => setStep('survey')} />;
+}
+
+function GoogleStep({ onDone }: { onDone: () => void }): ReactElement {
+  const t = useTranslator();
+  const insets = useSafeAreaInsets();
+  const [busy, setBusy] = useState(false);
+
+  const onGoogle = (): void => {
+    setBusy(true);
+    void connectGoogleAccount()
+      .then((result) => {
+        if (result.ok) {
+          void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          onDone();
+        }
+      })
+      .finally(() => setBusy(false));
+  };
+
+  return (
+    <View style={styles.root}>
+      <LinearGradient
+        colors={gradients.screenGrail}
+        locations={gradientStops.screenGrail}
+        style={StyleSheet.absoluteFill}
+      />
+      <KeyboardInsetScrollView
+        contentContainerStyle={[
+          styles.content,
+          {
+            paddingTop: Math.max(insets.top, layout.screenTopMin),
+            paddingBottom: insets.bottom + space.xxl,
+          },
+        ]}
+      >
+        <View style={styles.poster}>
+          <Text style={styles.posterTitle}>{t('onboarding.google.title')}</Text>
+          <Text style={styles.posterSubtitle}>{t('onboarding.google.subtitle')}</Text>
+        </View>
+        <View style={styles.actions}>
+          <ActionButton
+            label={t('settings.account.google')}
+            tone="gold"
+            busy={busy}
+            onPress={onGoogle}
+          />
+        </View>
+      </KeyboardInsetScrollView>
+    </View>
+  );
 }
 
 function WhoStep({ onNext }: { onNext: () => void }): ReactElement {

@@ -160,7 +160,7 @@ export const en = {
   'shadow.sheet.tally.many': '{title} × {count} · {dates}',
   'shadow.sheet.retract.a11y': 'Remove “{title}”',
   'shadow.octagon.a11y': 'Shadow octagon: share of the weekly norm eaten on each vector',
-  'shadow.substance_or_sleep.title': 'Tobacco, alcohol, or a lapse in food or sleep',
+  'shadow.substance_or_sleep.title': 'Bad habits',
   'shadow.substance_or_sleep.hint': 'Physical and mind',
   'shadow.feed_instead_of_contact.title': 'A day in the feed instead of a living contact',
   'shadow.feed_instead_of_contact.hint': 'All eight vectors',
@@ -297,7 +297,7 @@ export const en = {
     'Discipline shows the share of the things in which you kept your word.\n\nThe first day starts at 50%.',
   'guide.goal.title': 'The goal',
   'guide.goal.body':
-    'On the Grail you name the goal and set the term. You choose the main axis and the support.\n\nTo move toward the goal you can use ready methods or create your own atoms.\n\nWhen the goal is created, the steps of achievement open:\nIdea → Inspiration → Plan → Energy → Discipline → Balance → Persistence → Flexibility → Habit → Result.\n\nThe steps go in order. The tenth step closes the goal and adds it to achievements.\n\nA goal can be set aside.',
+    'On the Grail you name the goal and set the term. You choose the main axis and the support.\n\nTo move toward the goal you can use ready methods or create your own atoms.\n\nWhen the goal is created, the steps of achievement open:\nIdea → Inspiration → Plan → Energy → Discipline → Balance → Persistence → Flexibility → Habit → Result.\n\nThe steps go in order. The tenth step closes the goal and adds it to achievements.',
   'guide.grail.title': 'The Grail',
   'guide.grail.body':
     'The octagon shows your state in three views:\ntoday;\nlife;\nshadow.\n\nHarmony is always counted from the state of life.\n\nBeside it are the talent tree — what you do or used to do, breath for the mind and the spirit, and the Grail card, which you can use to show yourself.',
@@ -864,6 +864,8 @@ export const en = {
   'onboarding.title': 'ARCHE',
   'onboarding.subtitle': 'Architect of the Self',
   'onboarding.next': 'To the survey',
+  'onboarding.google.title': 'Keep the path',
+  'onboarding.google.subtitle': 'Sign in with Google so progress can live on the server.',
   'onboarding.who.error': 'A name and a real date of birth.',
   'onboarding.drive.error': 'Write what drives you.',
 
