@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { useEffect, useState, type ReactElement } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -7,12 +8,13 @@ import {
 } from '@/api/connectGoogleAccount';
 import {
   apiBaseUrl,
-  currentAccountSession,
   rememberAccountSession,
   restoreAccountSession,
+  useAccountSession,
 } from '@/api/accountSession';
-import { createArcheClient, type AccountSession } from '@/api/archeClient';
+import { createArcheClient } from '@/api/archeClient';
 import { signOutGoogle } from '@/api/googleSignIn';
+import { GoogleSignInButton } from '@/components/GoogleSignInButton';
 import { GlassPanel } from '@/components/GlassPanel';
 import { ModalSheet } from '@/components/ModalSheet';
 import { ActionButton } from '@/components/ui/ActionButton';
@@ -21,28 +23,31 @@ import { colors, radius, space, typography } from '@/theme';
 
 export function AccountSection(): ReactElement | null {
   const t = useTranslator();
+  const router = useRouter();
   const baseUrl = apiBaseUrl();
-  const [session, setSession] = useState<AccountSession | null>(currentAccountSession);
+  const session = useAccountSession();
   const [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
-    void restoreAccountSession().then(setSession);
+    void restoreAccountSession();
   }, []);
 
   if (baseUrl.length === 0) {
     return null;
   }
 
+  /** Close settings modal if open, then force the login screen. */
+  const goToLogin = (): void => {
+    if (router.canDismiss()) {
+      router.dismissAll();
+    }
+    router.replace('/onboarding');
+  };
+
   const onGoogle = (): void => {
     setBusy(true);
-    void connectGoogleAccount()
-      .then((result) => {
-        if (result.ok) {
-          setSession(currentAccountSession());
-        }
-      })
-      .finally(() => setBusy(false));
+    void connectGoogleAccount().finally(() => setBusy(false));
   };
 
   const onSignOut = (): void => {
@@ -51,8 +56,8 @@ export function AccountSection(): ReactElement | null {
     }
     setBusy(true);
     void clearGoogleAccountSession(session.token).finally(() => {
-      setSession(null);
       setBusy(false);
+      goToLogin();
     });
   };
 
@@ -60,14 +65,15 @@ export function AccountSection(): ReactElement | null {
     if (session === null) {
       return;
     }
+    const token = session.token;
     setBusy(true);
     void createArcheClient(baseUrl)
-      .deleteAccount(session.token)
+      .deleteAccount(token)
       .then(async () => {
-        await signOutGoogle();
+        await signOutGoogle().catch(() => undefined);
         rememberAccountSession(null);
-        setSession(null);
         setConfirmDelete(false);
+        goToLogin();
       })
       .finally(() => setBusy(false));
   };
@@ -77,12 +83,7 @@ export function AccountSection(): ReactElement | null {
       <Text style={styles.title}>{t('settings.account.title')}</Text>
       <View style={styles.body}>
         {session === null ? (
-          <ActionButton
-            label={t('settings.account.google')}
-            variant="outline"
-            busy={busy}
-            onPress={onGoogle}
-          />
+          <GoogleSignInButton busy={busy} onPress={onGoogle} />
         ) : (
           <>
             <ActionButton

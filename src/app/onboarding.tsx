@@ -2,13 +2,14 @@ import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Redirect, useRouter } from 'expo-router';
 import { useState, type ReactElement } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LifeSurveyForm } from '@/app/survey';
+import { needsAccountSignIn } from '@/api/accountGate';
 import { connectGoogleAccount } from '@/api/connectGoogleAccount';
-import { apiBaseUrl } from '@/api/accountSession';
-import { googleSignInConfigured } from '@/config/googleAuth';
+import { restoreAccountSession, useAccountSession } from '@/api/accountSession';
+import { GoogleSignInButton } from '@/components/GoogleSignInButton';
 import { KeyboardInsetScrollView } from '@/components/KeyboardInsetScrollView';
 import { ActionButton } from '@/components/ui/ActionButton';
 import { useTranslator } from '@/i18n/TranslatorProvider';
@@ -34,61 +35,87 @@ import { profileAge } from '@/utils/profile';
 
 const YEAR_LENGTH = 4;
 const DAY_MONTH_LENGTH = 2;
+const mark = require('../../assets/icon.png') as number;
+
+type OnboardingStep = 'login' | 'who' | 'survey';
+
+function initialStep(): OnboardingStep {
+  if (needsAccountSignIn()) {
+    return 'login';
+  }
+  return 'who';
+}
 
 export default function OnboardingScreen(): ReactElement {
+  const session = useAccountSession();
   const surveyApplied = useGrailStore((state) => state.surveyApplied);
   const profile = useGrailStore((state) => state.profile);
   const gated = needsFirstRunGate({ surveyApplied, profile });
+  const needLogin = needsAccountSignIn(session);
+  const [inFlow, setInFlow] = useState(needLogin || gated);
 
-  if (!gated) {
+  if (!needLogin && !gated && !inFlow) {
     return <Redirect href="/atomizer" />;
   }
 
-  return <OnboardingFlow />;
+  return (
+    <OnboardingFlow
+      onFinished={() => {
+        setInFlow(false);
+      }}
+    />
+  );
 }
 
-function OnboardingFlow(): ReactElement {
-  const [step, setStep] = useState<'who' | 'survey' | 'google'>('who');
+function OnboardingFlow({ onFinished }: { onFinished: () => void }): ReactElement {
+  const [step, setStep] = useState<OnboardingStep>(initialStep);
   const router = useRouter();
+
   const enterApp = (): void => {
+    onFinished();
     router.replace('/atomizer');
   };
+
+  const afterSignIn = (): void => {
+    const state = useGrailStore.getState();
+    if (needsFirstRunGate({ surveyApplied: state.surveyApplied, profile: state.profile })) {
+      setStep('who');
+      return;
+    }
+    enterApp();
+  };
+
+  if (step === 'login') {
+    return <LoginStep onSignedIn={afterSignIn} />;
+  }
 
   if (step === 'survey') {
     return (
       <LifeSurveyForm
         locked
         onApplied={() => {
-          const canGoogle = apiBaseUrl().length > 0 && googleSignInConfigured();
-          if (canGoogle) {
-            setStep('google');
-            return;
-          }
           enterApp();
         }}
       />
     );
   }
 
-  if (step === 'google') {
-    return <GoogleStep onDone={enterApp} />;
-  }
-
   return <WhoStep onNext={() => setStep('survey')} />;
 }
 
-function GoogleStep({ onDone }: { onDone: () => void }): ReactElement {
+function LoginStep({ onSignedIn }: { onSignedIn: () => void }): ReactElement {
   const t = useTranslator();
   const insets = useSafeAreaInsets();
   const [busy, setBusy] = useState(false);
 
   const onGoogle = (): void => {
     setBusy(true);
-    void connectGoogleAccount()
+    void restoreAccountSession()
+      .then(() => connectGoogleAccount())
       .then((result) => {
         if (result.ok) {
           void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-          onDone();
+          onSignedIn();
         }
       })
       .finally(() => setBusy(false));
@@ -101,28 +128,24 @@ function GoogleStep({ onDone }: { onDone: () => void }): ReactElement {
         locations={gradientStops.screenGrail}
         style={StyleSheet.absoluteFill}
       />
-      <KeyboardInsetScrollView
-        contentContainerStyle={[
-          styles.content,
+      <View
+        style={[
+          styles.loginBody,
           {
-            paddingTop: Math.max(insets.top, layout.screenTopMin),
+            paddingTop: Math.max(insets.top, layout.screenTopMin) + space.xxl,
             paddingBottom: insets.bottom + space.xxl,
           },
         ]}
       >
-        <View style={styles.poster}>
-          <Text style={styles.posterTitle}>{t('onboarding.google.title')}</Text>
-          <Text style={styles.posterSubtitle}>{t('onboarding.google.subtitle')}</Text>
+        <View style={styles.loginBrand}>
+          <Image source={mark} style={styles.loginMark} resizeMode="contain" />
+          <Text style={styles.loginTitle}>{t('onboarding.title')}</Text>
+          <Text style={styles.loginSubtitle}>{t('onboarding.subtitle')}</Text>
         </View>
-        <View style={styles.actions}>
-          <ActionButton
-            label={t('settings.account.google')}
-            tone="gold"
-            busy={busy}
-            onPress={onGoogle}
-          />
+        <View style={styles.loginActions}>
+          <GoogleSignInButton busy={busy} onPress={onGoogle} />
         </View>
-      </KeyboardInsetScrollView>
+      </View>
     </View>
   );
 }
@@ -328,6 +351,39 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: layout.screenX,
+  },
+  loginBody: {
+    flex: 1,
+    paddingHorizontal: layout.screenX,
+    justifyContent: 'space-between',
+  },
+  loginBrand: {
+    alignItems: 'center',
+    paddingTop: space.xl,
+  },
+  loginMark: {
+    width: 88,
+    height: 88,
+    marginBottom: space.lg,
+  },
+  loginTitle: {
+    ...typography.wordmark,
+    fontSize: 36,
+    lineHeight: 42,
+    color: colors.accent.gold,
+    textAlign: 'center',
+  },
+  loginSubtitle: {
+    ...typography.wordmark,
+    marginTop: space.sm,
+    fontSize: 14,
+    lineHeight: 20,
+    letterSpacing: 0.4,
+    color: colors.accent.goldMuted,
+    textAlign: 'center',
+  },
+  loginActions: {
+    paddingBottom: space.xxl,
   },
   poster: {
     alignItems: 'center',

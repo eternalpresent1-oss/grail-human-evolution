@@ -864,8 +864,6 @@ export const en = {
   'onboarding.title': 'ARCHE',
   'onboarding.subtitle': 'Architect of the Self',
   'onboarding.next': 'To the survey',
-  'onboarding.google.title': 'Keep the path',
-  'onboarding.google.subtitle': 'Sign in with Google so progress can live on the server.',
   'onboarding.who.error': 'A name and a real date of birth.',
   'onboarding.drive.error': 'Write what drives you.',
 

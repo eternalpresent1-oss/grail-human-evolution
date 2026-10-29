@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSyncExternalStore } from 'react';
 
 import type { AccountSession } from '@/api/archeClient';
 
@@ -6,13 +7,40 @@ const SESSION_KEY = 'grail-account-session';
 
 let current: AccountSession | null = null;
 let restoreStarted = false;
+let version = 0;
+const listeners = new Set<() => void>();
+
+function notify(): void {
+  version += 1;
+  for (const listener of listeners) {
+    listener();
+  }
+}
+
+export function subscribeAccountSession(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+export function getAccountSessionVersion(): number {
+  return version;
+}
 
 export function currentAccountSession(): AccountSession | null {
   return current;
 }
 
+/** Reactive session for layouts that must leave the app when signed out. */
+export function useAccountSession(): AccountSession | null {
+  useSyncExternalStore(subscribeAccountSession, getAccountSessionVersion, getAccountSessionVersion);
+  return current;
+}
+
 export function rememberAccountSession(next: AccountSession | null): void {
   current = next;
+  notify();
   if (next === null) {
     void AsyncStorage.removeItem(SESSION_KEY);
     return;
@@ -29,14 +57,17 @@ export async function restoreAccountSession(): Promise<AccountSession | null> {
     const raw = await AsyncStorage.getItem(SESSION_KEY);
     if (raw === null || raw.length === 0) {
       current = null;
+      notify();
       return null;
     }
     const parsed = JSON.parse(raw) as unknown;
     const session = readSession(parsed);
     current = session;
+    notify();
     return session;
   } catch {
     current = null;
+    notify();
     return null;
   }
 }
@@ -45,6 +76,7 @@ export async function restoreAccountSession(): Promise<AccountSession | null> {
 export function resetAccountSessionMemory(): void {
   current = null;
   restoreStarted = false;
+  notify();
 }
 
 export function apiBaseUrl(): string {

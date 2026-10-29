@@ -868,8 +868,6 @@ export const ru: Record<TranslationKey, string> = {
   'onboarding.title': 'ARCHE',
   'onboarding.subtitle': 'Architect of the Self',
   'onboarding.next': 'К анкете',
-  'onboarding.google.title': 'Сохрани путь',
-  'onboarding.google.subtitle': 'Войди через Google — прогресс сможет жить на сервере.',
   'onboarding.who.error': 'Нужны имя и настоящая дата рождения.',
   'onboarding.drive.error': 'Напиши, что тобой движет.',
 

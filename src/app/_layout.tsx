@@ -16,7 +16,6 @@ import { colors, space, typography } from '@/theme';
 import { useGrailStore } from '@/store/useGrailStore';
 
 void SplashScreen.preventAutoHideAsync();
-void restoreAccountSession();
 
 const poster = require('../../assets/splash.png') as number;
 
@@ -41,6 +40,7 @@ function AccessNotice(): ReactElement | null {
 export default function RootLayout(): ReactElement {
   const isReady = useGrailStore((state) => state.isHydrated);
   const [holdDone, setHoldDone] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
 
   const hideSystemSplash = useCallback(() => {
     void SplashScreen.hideAsync();
@@ -51,7 +51,11 @@ export default function RootLayout(): ReactElement {
     return () => clearTimeout(timer);
   }, []);
 
-  const showApp = isReady && holdDone;
+  useEffect(() => {
+    void restoreAccountSession().finally(() => setSessionReady(true));
+  }, []);
+
+  const showApp = isReady && holdDone && sessionReady;
 
   return (
     <GestureHandlerRootView style={styles.root}>

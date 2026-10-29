@@ -1,3 +1,5 @@
+import { needsAccountSignIn } from '@/api/accountGate';
+import { useAccountSession } from '@/api/accountSession';
 import { colors, space, typography } from '@/theme';
 import { useTranslator } from '@/i18n/TranslatorProvider';
 import { useGrailStore } from '@/store/useGrailStore';
@@ -143,10 +145,11 @@ function ChartGlyph({ color, focused, size }: TabIconProps): ReactElement {
 export default function TabsLayout(): ReactElement {
   const insets = useSafeAreaInsets();
   const t = useTranslator();
+  const session = useAccountSession();
   const surveyApplied = useGrailStore((state) => state.surveyApplied);
   const profile = useGrailStore((state) => state.profile);
 
-  if (needsFirstRunGate({ surveyApplied, profile })) {
+  if (needsAccountSignIn(session) || needsFirstRunGate({ surveyApplied, profile })) {
     return <Redirect href="/onboarding" />;
   }
 
