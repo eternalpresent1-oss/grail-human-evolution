@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
 
 import { Stack } from 'expo-router';
+import { NavigationBar } from 'expo-navigation-bar';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { type ReactElement, useCallback, useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { DeadlineWatcher } from '@/components/DeadlineWatcher';
@@ -60,6 +61,7 @@ export default function RootLayout(): ReactElement {
   return (
     <GestureHandlerRootView style={styles.root}>
       <StatusBar style="light" />
+      {Platform.OS === 'android' ? <NavigationBar style="light" /> : null}
       <DeadlineWatcher />
       {showApp ? (
         // Mounted only after persist lands. A timeout must never show seed

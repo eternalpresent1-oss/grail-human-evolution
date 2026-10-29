@@ -35,7 +35,7 @@ import { profileAge } from '@/utils/profile';
 
 const YEAR_LENGTH = 4;
 const DAY_MONTH_LENGTH = 2;
-const mark = require('../../assets/icon.png') as number;
+const mark = require('../../assets/mark.png') as number;
 
 type OnboardingStep = 'login' | 'who' | 'survey';
 
@@ -137,13 +137,15 @@ function LoginStep({ onSignedIn }: { onSignedIn: () => void }): ReactElement {
           },
         ]}
       >
-        <View style={styles.loginBrand}>
-          <Image source={mark} style={styles.loginMark} resizeMode="contain" />
-          <Text style={styles.loginTitle}>{t('onboarding.title')}</Text>
-          <Text style={styles.loginSubtitle}>{t('onboarding.subtitle')}</Text>
-        </View>
-        <View style={styles.loginActions}>
-          <GoogleSignInButton busy={busy} onPress={onGoogle} />
+        <View style={styles.loginCenter}>
+          <View style={styles.loginBrand}>
+            <Image source={mark} style={styles.loginMark} resizeMode="contain" />
+            <Text style={styles.loginTitle}>{t('onboarding.title')}</Text>
+            <Text style={styles.loginSubtitle}>{t('onboarding.subtitle')}</Text>
+          </View>
+          <View style={styles.loginActions}>
+            <GoogleSignInButton busy={busy} onPress={onGoogle} />
+          </View>
         </View>
       </View>
     </View>
@@ -355,16 +357,22 @@ const styles = StyleSheet.create({
   loginBody: {
     flex: 1,
     paddingHorizontal: layout.screenX,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+  },
+  loginCenter: {
+    width: '100%',
+    alignItems: 'stretch',
+    gap: space.xxxl + space.xl,
+    marginBottom: space.xxxl,
   },
   loginBrand: {
     alignItems: 'center',
-    paddingTop: space.xl,
   },
   loginMark: {
-    width: 88,
-    height: 88,
+    width: 96,
+    height: 96,
     marginBottom: space.lg,
+    backgroundColor: 'transparent',
   },
   loginTitle: {
     ...typography.wordmark,
@@ -383,7 +391,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   loginActions: {
-    paddingBottom: space.xxl,
+    width: '100%',
   },
   poster: {
     alignItems: 'center',
