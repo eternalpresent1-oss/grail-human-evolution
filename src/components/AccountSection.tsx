@@ -19,6 +19,7 @@ import { GlassPanel } from '@/components/GlassPanel';
 import { ModalSheet } from '@/components/ModalSheet';
 import { ActionButton } from '@/components/ui/ActionButton';
 import { useTranslator } from '@/i18n/TranslatorProvider';
+import { useGrailStore } from '@/store/useGrailStore';
 import { colors, radius, space, typography } from '@/theme';
 
 export function AccountSection(): ReactElement | null {
@@ -26,6 +27,7 @@ export function AccountSection(): ReactElement | null {
   const router = useRouter();
   const baseUrl = apiBaseUrl();
   const session = useAccountSession();
+  const resetAllData = useGrailStore((state) => state.resetAllData);
   const [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
@@ -72,6 +74,8 @@ export function AccountSection(): ReactElement | null {
       .then(async () => {
         await signOutGoogle().catch(() => undefined);
         rememberAccountSession(null);
+        // Account delete wipes the phone copy too — next sign-in must redo who + survey.
+        resetAllData();
         setConfirmDelete(false);
         goToLogin();
       })
@@ -111,7 +115,7 @@ export function AccountSection(): ReactElement | null {
             onPress={onDelete}
           />
           <ActionButton
-            label={t('settings.reset.confirm.dismiss')}
+            label={t('settings.account.delete.dismiss')}
             variant="ghost"
             onPress={() => setConfirmDelete(false)}
           />

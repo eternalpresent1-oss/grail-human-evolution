@@ -43,6 +43,35 @@ describe('feature access', () => {
     }
   });
 
+  it('keeps preview open even when signed in (no ENFORCE_ACCESS)', () => {
+    rememberAccountSession({
+      token: 'session-token-session-token-session',
+      userId: 'user-1',
+      provider: 'google',
+      revision: 0,
+    });
+    const previousUrl = process.env.EXPO_PUBLIC_API_URL;
+    const previousEnforce = process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
+    process.env.EXPO_PUBLIC_API_URL = 'https://api.test';
+    delete process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
+    const apply = jest.fn();
+    const block = jest.fn();
+    runIfAllowed('custom_atom', '2026-09-26', apply, block);
+    expect(apply).toHaveBeenCalledTimes(1);
+    expect(block).not.toHaveBeenCalled();
+    if (previousUrl === undefined) {
+      delete process.env.EXPO_PUBLIC_API_URL;
+    } else {
+      process.env.EXPO_PUBLIC_API_URL = previousUrl;
+    }
+    if (previousEnforce === undefined) {
+      delete process.env.EXPO_PUBLIC_ENFORCE_ACCESS;
+    } else {
+      process.env.EXPO_PUBLIC_ENFORCE_ACCESS = previousEnforce;
+    }
+    rememberAccountSession(null);
+  });
+
   it('blocks premium offline when store access is enforced', () => {
     rememberAccountSession(null);
     const previous = process.env.EXPO_PUBLIC_ENFORCE_ACCESS;

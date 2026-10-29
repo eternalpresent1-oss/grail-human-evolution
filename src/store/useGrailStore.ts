@@ -155,8 +155,6 @@ export interface GrailState extends PersistedGrailState {
   ) => void;
   completeCampaign: (campaignId: string) => void;
   shelveCampaign: (campaignId: string) => void;
-  /** Burns custom and campaign atoms (including future ones) and wipes shadow. Keeps the week's canon, language, name, date, drive, the goal itself, survey, life octagon, talents, achievements, career ceiling, signals. */
-  resetProgress: () => void;
   /** Returns persisted state to the first opening: empty life, empty desk of custom work, first-run corridor. */
   resetAllData: () => void;
   confessShadow: (catalogId: ShadowCatalogId) => void;
@@ -884,55 +882,6 @@ export const useGrailStore = create<GrailState>()(
             })),
             disciplineBeacon: false,
           };
-        });
-      },
-
-      resetProgress: () => {
-        const {
-          profile,
-          language,
-          surveyAnswers,
-          surveyApplied,
-          driveLine,
-          campaigns,
-          methodSignals,
-          talents,
-          achievements,
-          proofBackgroundUri,
-          aiApiKey,
-          counselThread,
-          lifeVectorReading,
-          tasks,
-          disciplineCompleted,
-          soundEnabled,
-          musicEnabled,
-          breathAwardedOn,
-        } = get();
-        const baseline = createBaselineState();
-
-        const nextTasks = tasks.filter((task) => task.kind === 'canon');
-
-        set({
-          ...baseline,
-          language,
-          surveyAnswers,
-          surveyApplied,
-          driveLine,
-          campaigns,
-          methodSignals,
-          talents,
-          achievements,
-          proofBackgroundUri,
-          aiApiKey,
-          counselThread,
-          lifeVectorReading,
-          disciplineCompleted,
-          profile: stampDiscipline(profile, nextTasks, []),
-          soundEnabled,
-          musicEnabled,
-          breathAwardedOn,
-          tasks: nextTasks,
-          disciplineBeacon: false,
         });
       },
 

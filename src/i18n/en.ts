@@ -304,9 +304,6 @@ export const en = {
   'guide.analysis.title': 'Analysis',
   'guide.analysis.body':
     'Analysis gathers cards in three directions: day, life and shadow.\n\nThey show where the strong side is now, where there is room to grow, and what is worth noticing.\n\nAt the bottom is an advisor — it helps turn what you notice into a concrete action.',
-  'guide.data.title': 'Data',
-  'guide.data.body':
-    'Reset burns the atoms you added and the shadow. Life and the name stay.\n\nA full wipe erases all data — the app returns to a state as if it had never been opened.',
   'guide.atoms.title': 'Atoms',
   'guide.atoms.body':
     'An atom is one concrete action. Something you can do and close in a day.\n\nAn atom answers the question: “What am I doing?”\n\nAn atom can belong to a goal or stand on its own — as an action that keeps one of the eight vectors going.\n\nFor example: walk for 30 minutes, do a workout, read a few pages, send a job application, call someone close.',
@@ -621,28 +618,16 @@ export const en = {
     'The server copy was newer — it was applied on this phone. Local photo and keys stayed here.',
   'settings.account.delete.title': 'Delete the account on the server?',
   'settings.account.delete.body':
-    'The server copy of this progress is erased. What is already on this phone stays until you reset it here.',
+    'The server account and all data on this phone are erased. After signing in again you must redo the introduction and the survey.',
   'settings.account.delete.accept': 'Yes, delete the account',
+  'settings.account.delete.dismiss': 'Leave it as it is',
   'access.premium': 'This opens with the subscription.',
   'access.limit': 'The advisor continues tomorrow.',
-  'settings.reset.title': 'Data reset',
   'settings.survey.title': 'Life survey',
   'settings.survey.hint':
     'Only honesty with yourself helps you see who you actually want to be. Answer as you see fit. Only you know how honest the answer is.',
   'settings.survey.open': 'Open the survey',
   'settings.survey.progress': 'Base {base}/{baseTotal} · detailed reading {deep}/{deepTotal}',
-  'settings.reset.action': 'Reset',
-  'settings.reset.confirm.title': 'Burn the daily field and the atoms you added?',
-  'settings.reset.confirm.body':
-    'The atoms you added leave the desk, including those set for later days and those that belong to the goal. The canon of the week stays. Shadow of the field is wiped. Language, name, date, drive, the goal itself, signals, survey and the life field stay.',
-  'settings.reset.confirm.accept': 'Yes, burn them',
-  'settings.reset.confirm.dismiss': 'Leave it as it is',
-  'settings.reset.all.action': 'Reset all data',
-  'settings.reset.all.confirm.kicker': 'First opening',
-  'settings.reset.all.confirm.title': 'Erase this life as if the app had never been opened?',
-  'settings.reset.all.confirm.body':
-    'Everything goes: name, date of birth, drive, survey, the life octagon, talents, achievements, the goal and its atoms, the desk, the canon of the week, shadow, signals, the advisor, the life vector, the discipline tree, breath and sound. The corridor of the first hour opens again. This cannot be brought back.',
-  'settings.reset.all.confirm.accept': 'Yes, erase everything',
 
   'settings.signals.title': 'Signal',
   'settings.signals.master.a11y': 'Turns all signals on and off',

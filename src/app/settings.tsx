@@ -17,7 +17,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AccountSection } from '@/components/AccountSection';
 import { GlassPanel } from '@/components/GlassPanel';
 import { KeyboardInsetScrollView } from '@/components/KeyboardInsetScrollView';
-import { ModalSheet } from '@/components/ModalSheet';
 import { ActionButton } from '@/components/ui/ActionButton';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { useTranslator } from '@/i18n/TranslatorProvider';
@@ -80,25 +79,6 @@ export default function SettingsScreen(): ReactElement {
   const t = useTranslator();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const [resetKind, setResetKind] = useState<null | 'field' | 'all'>(null);
-  const resetProgress = useGrailStore((state) => state.resetProgress);
-  const resetAllData = useGrailStore((state) => state.resetAllData);
-
-  const onResetField = (): void => {
-    resetProgress();
-    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-    setResetKind(null);
-    router.back();
-  };
-
-  const onResetAll = (): void => {
-    resetAllData();
-    void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-    setResetKind(null);
-    router.replace('/onboarding');
-  };
-
-  const resetOpen = resetKind !== null;
 
   return (
     <View style={styles.root}>
@@ -139,64 +119,7 @@ export default function SettingsScreen(): ReactElement {
         <ProfileSection />
         <SurveySection />
         <AccountSection />
-
-        <Section title={t('settings.reset.title')}>
-          <ActionButton
-            label={t('settings.reset.action')}
-            variant="danger"
-            sound="none"
-            onPress={() => setResetKind('field')}
-          />
-          <ActionButton
-            label={t('settings.reset.all.action')}
-            variant="alarm"
-            sound="none"
-            onPress={() => setResetKind('all')}
-          />
-        </Section>
       </KeyboardInsetScrollView>
-
-      <ModalSheet
-        visible={resetOpen}
-        onClose={() => setResetKind(null)}
-        align="center"
-        accessibilityLabel={t('settings.reset.confirm.dismiss')}
-      >
-        <View style={styles.confirm}>
-          {resetKind === 'all' ? (
-            <Text style={styles.confirmKicker}>{t('settings.reset.all.confirm.kicker')}</Text>
-          ) : null}
-          <Text style={styles.confirmTitle}>
-            {t(
-              resetKind === 'all'
-                ? 'settings.reset.all.confirm.title'
-                : 'settings.reset.confirm.title',
-            )}
-          </Text>
-          <Text style={styles.confirmBody}>
-            {t(
-              resetKind === 'all'
-                ? 'settings.reset.all.confirm.body'
-                : 'settings.reset.confirm.body',
-            )}
-          </Text>
-
-          <ActionButton
-            label={t(
-              resetKind === 'all'
-                ? 'settings.reset.all.confirm.accept'
-                : 'settings.reset.confirm.accept',
-            )}
-            variant={resetKind === 'all' ? 'alarm' : 'danger'}
-            onPress={resetKind === 'all' ? onResetAll : onResetField}
-          />
-          <ActionButton
-            label={t('settings.reset.confirm.dismiss')}
-            variant="ghost"
-            onPress={() => setResetKind(null)}
-          />
-        </View>
-      </ModalSheet>
     </View>
   );
 }
@@ -994,24 +917,5 @@ const styles = StyleSheet.create({
     ...typography.caption,
     marginTop: space.snug,
     color: colors.text.faint,
-  },
-  confirm: {
-    paddingHorizontal: space.xl,
-    paddingTop: space.xxl - 2,
-    paddingBottom: space.sm,
-    gap: space.sm,
-  },
-  confirmKicker: {
-    ...typography.kicker,
-    color: colors.state.danger,
-  },
-  confirmTitle: {
-    ...typography.modalTitle,
-    color: colors.text.ivory,
-  },
-  confirmBody: {
-    ...typography.bodyLead,
-    marginBottom: space.md,
-    color: colors.text.muted,
   },
 });

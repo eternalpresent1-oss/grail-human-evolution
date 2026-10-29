@@ -192,48 +192,6 @@ describe('past-day ritual', () => {
   });
 });
 
-describe('resetProgress', () => {
-  it('burns custom and campaign atoms and shadow, keeps canon and the life field', () => {
-    const baseline = createBaselineState();
-    const lifeScore = 41;
-    const profile = {
-      ...baseline.profile,
-      dimensions: {
-        ...baseline.profile.dimensions,
-        physical: { ...baseline.profile.dimensions.physical, score: lifeScore },
-      },
-    };
-    const canon = baseline.tasks.filter((task) => task.kind === 'canon');
-    expect(canon.length).toBeGreaterThan(0);
-
-    resetStore({
-      profile,
-      driveLine: 'Build the field',
-      campaigns: [goal()],
-      shadowEvents: [{ id: 'shadow-1', catalogId: 'broke_word', occurredOn: localDateKey() }],
-      tasks: [
-        ...canon,
-        customAtom({ id: 'mine' }),
-        customAtom({
-          id: 'goal-atom',
-          kind: 'campaign',
-          campaignId: 'campaign-1',
-        }),
-      ],
-    });
-
-    useGrailStore.getState().resetProgress();
-
-    const next = useGrailStore.getState();
-    expect(next.tasks.every((task) => task.kind === 'canon')).toBe(true);
-    expect(next.tasks).toHaveLength(canon.length);
-    expect(next.shadowEvents).toEqual([]);
-    expect(next.campaigns).toEqual([goal()]);
-    expect(next.driveLine).toBe('Build the field');
-    expect(next.profile.dimensions.physical.score).toBe(lifeScore);
-  });
-});
-
 describe('resetAllData', () => {
   it('returns the save to the first opening and opens the first-run gate', () => {
     const baseline = createBaselineState();

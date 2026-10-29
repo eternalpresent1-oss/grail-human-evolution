@@ -15,7 +15,6 @@ const SECTIONS: readonly { title: TranslationKey; body: TranslationKey }[] = [
   { title: 'guide.goal.title', body: 'guide.goal.body' },
   { title: 'guide.grail.title', body: 'guide.grail.body' },
   { title: 'guide.analysis.title', body: 'guide.analysis.body' },
-  { title: 'guide.data.title', body: 'guide.data.body' },
   { title: 'guide.atoms.title', body: 'guide.atoms.body' },
   { title: 'guide.aim.title', body: 'guide.aim.body' },
 ];

@@ -13,7 +13,7 @@ const OPEN_WITHOUT_SERVER = new Set([
 
 /**
  * Store / closed-test builds set `EXPO_PUBLIC_ENFORCE_ACCESS=1`.
- * Preview and local `__DEV__` stay open so product testing is not locked offline.
+ * Preview and local stay open so product testing is not locked by Premium.
  */
 export function accessEnforced(): boolean {
   return process.env.EXPO_PUBLIC_ENFORCE_ACCESS === '1';
@@ -37,10 +37,14 @@ export async function readAccess(
 }
 
 export async function accessBlockNow(feature: string, day: string): Promise<AccessBlock | null> {
+  // Preview / dev: do not ask the server to lock Premium features.
+  if (!accessEnforced()) {
+    return null;
+  }
   const session = currentAccountSession();
   const base = apiBaseUrl();
   if (session === null || base.length === 0) {
-    if (accessEnforced() && !isOpenWithoutServer(feature)) {
+    if (!isOpenWithoutServer(feature)) {
       return 'premium';
     }
     return null;
@@ -58,10 +62,16 @@ export function runIfAllowed(
   apply: () => void,
   block: (reason: AccessBlock) => void,
 ): void {
+  // Preview / dev: signed-in users must still be able to test the full product
+  // until Play Billing (phase 4) and store builds with ENFORCE_ACCESS.
+  if (!accessEnforced()) {
+    apply();
+    return;
+  }
   const session = currentAccountSession();
   const base = apiBaseUrl();
   if (session === null || base.length === 0) {
-    if (accessEnforced() && !isOpenWithoutServer(feature)) {
+    if (!isOpenWithoutServer(feature)) {
       block('premium');
       return;
     }

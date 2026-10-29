@@ -1,6 +1,6 @@
 # Privacy Policy — Arche: Architect of the Self
 
-Last updated: 27 September 2026
+Last updated: 29 October 2026
 
 This policy describes what Arche collects, where it lives, and how you can delete it. It matches the current product behaviour. Publish this page at a public HTTPS URL before the Play Store listing asks for a privacy link.
 
@@ -22,7 +22,7 @@ By default your progress stays on the device:
 - Notification schedules you set
 - Language follows the device (English or Russian)
 
-You can clear local data with the in-app full reset.
+Local data stays on the device while you use the app and after you sign out. There is no separate Settings control to reset or wipe local data on its own.
 
 ## Account and server copy
 
@@ -55,8 +55,8 @@ Without a subscription you can use canon Done/Burn, take the survey once, place 
 
 ## Deletion
 
-- **Local reset** removes data from that phone.
-- **Delete account** on the server removes your snapshot, sessions, and usage counters, marks subscriptions closed, and stores a deletion record. The same Apple or Google account can sign in again later as a new empty user. Deleting the server account does not wipe the local copy on the phone by itself.
+- **Sign out** ends the server session on that phone. Local progress stays on the device.
+- **Delete account** removes your server snapshot, sessions, and usage counters, marks subscriptions closed, and stores a deletion record. The same action also clears all local app data on that phone (a full wipe), then the introduction and survey run again. The same Apple or Google account can sign in later as a new empty user.
 
 ## Children
 
