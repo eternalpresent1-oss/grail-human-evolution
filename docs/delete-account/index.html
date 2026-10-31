@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Request Account Deletion — Arche: Architect of the Self</title>
+  <meta name="description" content="How to request deletion of your Arche: Architect of the Self account and what data is removed or retained." />
+  <style>
+    :root {
+      --bg: #12141a;
+      --surface: #1a1d26;
+      --text: #e8eaef;
+      --muted: #9aa3b2;
+      --border: #2a3140;
+      --accent: #c4a574;
+      --link: #b8c4d9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(196, 165, 116, 0.08), transparent),
+        linear-gradient(180deg, #141820 0%, #12141a 40%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.75rem;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 1.85rem);
+      font-weight: 600;
+      line-height: 1.25;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .updated {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .intro {
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 2.25rem 0 0.75rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ol,
+    ul {
+      margin: 0 0 1rem;
+      padding-left: 1.25rem;
+    }
+
+    ol.steps {
+      list-style: none;
+      padding-left: 0;
+      counter-reset: step;
+    }
+
+    ol.steps > li {
+      position: relative;
+      counter-increment: step;
+      margin-bottom: 1.15rem;
+      padding: 1rem 1rem 1rem 3.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    ol.steps > li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0.9rem;
+      top: 1rem;
+      width: 1.65rem;
+      height: 1.65rem;
+      border-radius: 50%;
+      background: rgba(196, 165, 116, 0.15);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.65rem;
+      text-align: center;
+    }
+
+    ol.steps > li strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    li strong {
+      color: var(--text);
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .callout {
+      margin: 1.5rem 0;
+      padding: 1rem 1.15rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="brand">Arche · Architect of the Self</p>
+      <h1>Request Account Deletion</h1>
+      <p class="updated">Last updated: 31 October 2026</p>
+      <p class="intro">This page explains how to delete your account in <strong>Arche: Architect of the Self</strong> and what happens to your data. It matches current product behaviour.</p>
+    </header>
+
+    <main>
+      <h2>How to request account deletion</h2>
+      <p>Deletion is completed in the app. You must be signed in with Apple or Google.</p>
+      <ol class="steps">
+        <li>
+          <strong>Open Arche</strong>
+          Launch <em>Arche: Architect of the Self</em> on the phone where you use the account.
+        </li>
+        <li>
+          <strong>Go to Settings</strong>
+          Open the Settings screen from the app navigation.
+        </li>
+        <li>
+          <strong>Open Account</strong>
+          Choose the Account section.
+        </li>
+        <li>
+          <strong>Delete account</strong>
+          Tap <strong>Delete account</strong> and confirm. The app removes your server data, clears all local app data on that phone, and returns you to introduction and survey (re-onboarding).
+        </li>
+      </ol>
+
+      <div class="callout">
+        <p><strong>Sign out is not deletion.</strong> Signing out ends the server session on that phone but leaves local progress on the device. To wipe the account and local data, use <strong>Delete account</strong>.</p>
+      </div>
+
+      <h2>What is deleted</h2>
+      <p>When you confirm Delete account, the following are removed:</p>
+      <ul>
+        <li>Your server progress snapshot</li>
+        <li>Active sessions</li>
+        <li>Daily counsellor usage counters</li>
+        <li>All local app data on that phone (a full wipe of profile, survey, atoms, campaigns, talent tree, achievements, shadow marks, counsel chat, life-vector text, Grail photo URI, and notification schedules stored by the app)</li>
+      </ul>
+      <p>Subscriptions tied to the account are marked closed on the server. Photo files are never uploaded; only a local URI may have been stored, and that is cleared with the rest of local data.</p>
+
+      <h2>What is kept</h2>
+      <ul>
+        <li>A server record that account deletion was requested (for audit / compliance)</li>
+        <li>Purchase and subscription history managed by Google Play or the App Store (those platforms control billing records; cancel or manage subscriptions in the store if needed)</li>
+        <li>Data OpenAI may have processed momentarily to answer a past Advisor or life-vector request is subject to OpenAI’s retention practices; we do not keep a separate copy of those model prompts beyond normal server operation described in the privacy policy</li>
+      </ul>
+
+      <h2>Retention notes</h2>
+      <ul>
+        <li>Deletion takes effect when you confirm in the app; server snapshot, sessions, and usage counters are removed as part of that action.</li>
+        <li>The deletion request record is retained so we can show that deletion occurred.</li>
+        <li>After deletion, the same Apple or Google account can sign in later as a new empty user.</li>
+        <li>If you only need to stop using the account on one phone without wiping data, use Sign out instead.</li>
+      </ul>
+
+      <h2>Developer</h2>
+      <p>Arche: Architect of the Self is published by the developer listed on the Google Play store page. Contact for privacy or deletion questions will be listed there when the app is published.</p>
+
+      <h2>Related</h2>
+      <p>See the full <a href="../privacy/">Privacy Policy</a> for what the app stores on your phone and on the server.</p>
+    </main>
+
+    <footer>
+      <p><a href="../privacy/">Privacy Policy</a></p>
+    </footer>
+  </div>
+</body>
+</html>
