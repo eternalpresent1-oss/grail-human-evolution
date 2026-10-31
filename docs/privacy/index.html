@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy — Arche: Architect of the Self</title>
+  <meta name="description" content="Privacy policy for Arche: Architect of the Self — what the app collects, where data lives, and how you can delete it." />
+  <style>
+    :root {
+      --bg: #12141a;
+      --surface: #1a1d26;
+      --text: #e8eaef;
+      --muted: #9aa3b2;
+      --border: #2a3140;
+      --accent: #c4a574;
+      --link: #b8c4d9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(196, 165, 116, 0.08), transparent),
+        linear-gradient(180deg, #141820 0%, #12141a 40%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.75rem;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 1.85rem);
+      font-weight: 600;
+      line-height: 1.25;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .updated {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .intro {
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 2.25rem 0 0.75rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul {
+      margin: 0 0 1rem;
+      padding-left: 1.25rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    li strong {
+      color: var(--text);
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    code {
+      font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+      font-size: 0.9em;
+      background: var(--surface);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="brand">Arche · Architect of the Self</p>
+      <h1>Privacy Policy — Arche: Architect of the Self</h1>
+      <p class="updated">Last updated: 29 October 2026</p>
+      <p class="intro">This policy describes what Arche collects, where it lives, and how you can delete it. It matches the current product behaviour.</p>
+    </header>
+
+    <main>
+      <h2>Who we are</h2>
+      <p>Arche (“the app”) is a personal practice app for phones. Contact for privacy questions will be listed on the store page when the app is published.</p>
+
+      <h2>What the app stores on your phone</h2>
+      <p>By default your progress stays on the device:</p>
+      <ul>
+        <li>Profile details you enter (name, date of birth, drive line)</li>
+        <li>Life survey answers</li>
+        <li>Atoms (tasks), campaigns/goals, talent tree, achievements</li>
+        <li>Shadow marks and retractions</li>
+        <li>Counsel chat thread on the device</li>
+        <li>Life-vector reading text</li>
+        <li>Local URI of a photo you choose as the Grail card background (the image file itself stays on the phone)</li>
+        <li>Notification schedules you set</li>
+        <li>Language follows the device (English or Russian)</li>
+      </ul>
+      <p>Local data stays on the device while you use the app and after you sign out. There is no separate Settings control to reset or wipe local data on its own.</p>
+
+      <h2>Account and server copy</h2>
+      <p>When you sign in with Apple or Google and a server address is configured:</p>
+      <ul>
+        <li>The server stores an account tied to the Apple or Google subject (and email only if the provider returns one)</li>
+        <li>A session token hash (not the raw token)</li>
+        <li>A JSON snapshot of your progress (without the OpenAI key field and without the photo file)</li>
+        <li>Subscription status from the store receipt</li>
+        <li>Daily counsellor usage counters (questions and vector refreshes)</li>
+        <li>A record that account deletion was requested</li>
+      </ul>
+      <p>Photo files are not uploaded. The server never receives <code>isPremium</code> from the phone; premium status comes from the store receipt after verification.</p>
+
+      <h2>Counsellor and OpenAI</h2>
+      <p>When you ask the Advisor or refresh the life vector while signed in, the phone sends a text snapshot of your progress to our API. The server checks your session, subscription, and daily limits, then may send that snapshot to OpenAI (<code>gpt-4o-mini</code>) to generate a reply. Day and shadow vector texts that are produced only on the phone do not call OpenAI.</p>
+      <p>Limits: 50 advisor questions and 10 shared vector refreshes per local calendar day. Unused slots do not roll over.</p>
+      <p>OpenAI processes the snapshot only to answer your request. Do not put secrets you do not want processed into the advisor chat.</p>
+
+      <h2>Subscriptions</h2>
+      <p>Digital subscriptions are sold only through Google Play and (later) the App Store. We do not take card details inside the app. After a subscription ends, content you already created stays on the phone; creating new paid-tier items locks again until a new active subscription is verified.</p>
+
+      <h2>Free taste</h2>
+      <p>Without a subscription you can use canon Done/Burn, take the survey once, place exactly one shadow mark ever, read the canon analysis, use breath practice, and see one life-vector display. Advisor chat is not part of the free taste.</p>
+
+      <h2>Deletion</h2>
+      <ul>
+        <li><strong>Sign out</strong> ends the server session on that phone. Local progress stays on the device.</li>
+        <li><strong>Delete account</strong> removes your server snapshot, sessions, and usage counters, marks subscriptions closed, and stores a deletion record. The same action also clears all local app data on that phone (a full wipe), then the introduction and survey run again. The same Apple or Google account can sign in later as a new empty user.</li>
+      </ul>
+
+      <h2>Children</h2>
+      <p>Arche is not directed at children under 16. Do not create an account for a child under that age.</p>
+
+      <h2>Legal basis (EU / GDPR note)</h2>
+      <p>Date of birth and other profile fields are personal data. Before publishing in the EU we will state the lawful basis and retention period on the published policy page. Until then treat this document as the factual description of processing only.</p>
+
+      <h2>Changes</h2>
+      <p>We will update this document when behaviour changes and refresh the “Last updated” date.</p>
+
+      <h2>Languages</h2>
+      <p>This English text is the source for the store listing. A Russian translation for users may be published alongside it; if wording differs, the English store version controls for legal listing purposes until a bilingual legal review is done.</p>
+    </main>
+
+    <footer>
+      <p><a href="../privacy-policy.md">Source markdown</a></p>
+    </footer>
+  </div>
+</body>
+</html>
